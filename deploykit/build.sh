@@ -23,6 +23,7 @@ for DIRPATH in $PROJDIR/*; do
             $PANDOC_LATEX_VARS \
             -f markdown -t pdf \
             --pdf-engine=xelatex \
+            --number-sections \
             -o "$PROJDIR/$DIRNAME.pdf"
         mkdir -p "$PWD/_dist/$PROJNAME"
         cp -af "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"

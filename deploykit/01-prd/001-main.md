@@ -1,6 +1,6 @@
 \title{{\huge\sffamily AOSC DeployKit}\linebreak Product Requirement Document}
 \author{Neruthes}
-\date{2022-02-10 v0.0.0-pre1}
+\date{2022-02-10 v0.0.0-pre2}
 
 \maketitle
 
@@ -22,7 +22,7 @@ This document describes the feature requirements for DeployKit, a software which
 AOSC OS has a long history of manual installation, like Arch Linux or Gentoo.
 However, manual installation is considered unfriendly for new users,
 especially when some distributions like Ubuntu have much smoother installation experience.
-Therefore, the community decided to create a friendly installer program, under the name `DeployKit`, or sometimes `aoscdk`.
+Therefore, the community decided to create a friendly installer program, under the name `DeployKit` or `aoscdk-rs`.
 
 
 ## Working Environment
