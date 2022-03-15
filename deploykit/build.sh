@@ -5,25 +5,45 @@ PROJNAME="$(basename "$PROJDIR")"
 echo $PROJNAME
 # exit 0
 
-PANDOC_LATEX_VARS="
--V fontsize=11pt
--V papersize:a4
--V geometry:margin=30mm
-"
+if [[ ! -e $PWD/README.md ]]; then
+    echo "[ERROR] You may only invoke this script at the root of the repository, where 'README.md' is located. Run './$(basename $PWD)/build.sh' instead."
+    exit 1
+fi
 
+
+
+PANDOC_LATEX_VARS="
+-s
+-V papersize:a4
+-V geometry=textwidth=36em,vmargin=32mm
+-V hyperrefoptions=colorlinks=false,pdfpagemode=FullScreen
+-V fontsize=12pt
+-f markdown
+-t pdf
+--number-sections
+--toc-depth=2
+--shift-heading-level-by=-1
+--pdf-engine=xelatex
+--toc
+"
 
 mkdir -p "$PWD/_dist"
 for DIRPATH in $PROJDIR/*; do
     if [[ -d $DIRPATH ]]; then
         DIRNAME="$(basename "$DIRPATH")"
         echo "[INFO] Building document $DIRPATH"
-        cat     "$PROJDIR/$DIRNAME"/*.md \
-                "$PWD/.tex/footer.tex" \
-        | pandoc -s \
+        if [[ ! -e $DIRPATH/info.json ]]; then
+            echo "[ERROR] Cannot find 'info.json'"
+        fi
+        info_AUTHOR="$(jq -rM .author $DIRPATH/info.json)"
+        cat \
+            "$PROJDIR/$DIRNAME"/*.md \
+            "$PWD/.tex/footer.tex" \
+        | pandoc \
             $PANDOC_LATEX_VARS \
-            -f markdown -t pdf \
-            --pdf-engine=xelatex \
-            --number-sections \
+            -V mainfont='QTBookmann' \
+            -V author="$info_AUTHOR" \
+            -V date="$(date +%Y-%m-%d)" \
             -o "$PROJDIR/$DIRNAME.pdf"
         mkdir -p "$PWD/_dist/$PROJNAME"
         cp -af "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
