@@ -1,20 +1,55 @@
 \usepackage{xcolor}
 \usepackage{titlesec}
+\usepackage{titling}
+\usepackage{datetime2}
+
+\setmainfont{XCharter}
+\setromanfont{XCharter}
+\setsansfont{Inter}
+\setmonofont{JetBrains Mono NL}
+
+\linespread{1.1}
 
 \lstset{
-    basicstyle=\ttfamily,
-    numbersep=5pt,
-    backgroundcolor=\color{black!5},
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    tabsize=2,
-    captionpos=b,
-    breaklines=true,
-    breakatwhitespace=true,
-    breakautoindent=true,
-    linewidth=\textwidth
+	basicstyle=\ttfamily,
+	numbersep=5pt,
+	backgroundcolor=\color{black!5},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	captionpos=b,
+	breaklines=true,
+	breakatwhitespace=true,
+	breakautoindent=true,
+	linewidth=\textwidth
 }
 
-\titleformat*{\section}{\LARGE\bfseries\sffamily}
-\titleformat*{\subsection}{\Large\bfseries\sffamily}
+\titleformat*{\section}{\Large\bfseries\sffamily}
+
+
+
+
+
+
+
+
+\pretitle{\begin{center}{\fontspec{Noto Serif CJK SC}\normalsize{Anthon Open Source Community}}\par\vspace{1mm}\fontspec{Latin Modern Roman}\Large\mdseries}
+
+\preauthor{%
+    \vspace{1mm}
+    \sffamily
+    \fontspec{Noto Serif CJK SC}
+    \begin{center}
+    \normalsize \lineskip 0.75em%
+}
+\postauthor{%
+    \end{center}
+}
+
+\predate{%
+    \sffamily
+    \fontspec{Noto Serif CJK SC}
+	\begin{center}
+	\small
+}

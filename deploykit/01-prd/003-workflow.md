@@ -49,9 +49,6 @@ If the user selects any partition, DK shall determine whether the partition is b
 | ROOT      | 25 GiB         |
 | ESP       | 200 MiB        |
 
-- ESP: 200 MiB
-- ROOT: 25 GiB
-
 If the partition is not big enough, DK shall inform the user with a dialogue,
 requiring an extra confirmation.
 

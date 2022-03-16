@@ -37,42 +37,45 @@ function buildTmpFile() {
     for MDFILE in $(ls $TASKDIR/*.md); do
         cat $MDFILE >> $TMPFN
         if [[ $CURRENTCOUNT != $TOTALCOUNT ]]; then
-            printf "\n\n\pagebreak\n\n" >> $TMPFN
+            printf "\n\n\clearpage\n\n" >> $TMPFN
         fi
         CURRENTCOUNT="$((CURRENTCOUNT+1))"
     done
-    sed "s|PROJNAME|$PROJNAME/$DIRNAME|g" "$PWD/.tex/footer.tex" >> $TMPFN
+    if [[ -e $TASKDIR/999-appendix.tex ]]; then
+        printf "\n\n\clearpage\n\n" >> $TMPFN
+        cat $TASKDIR/999-appendix.tex >> $TMPFN
+    fi
+    sed "s|PROJNAME|$PROJNAME/$DIRNAME|g" "$PWD/.tex/footer.tex" \
+        | sed 's|CONTRIBUTORSLIST|$(getmetainfo .contributors)|' \
+        >> $TMPFN
 }
 
 mkdir -p "$PWD/_dist"
 for DIRPATH in $PROJDIR/*; do
     if [[ -d $DIRPATH ]]; then
         DIRNAME="$(basename "$DIRPATH")"
-        echo "[INFO] Building document $DIRPATH"
+        echo "[INFO] Building document '$DIRNAME'"
 
         if [[ ! -e $DIRPATH/info.json ]]; then
             echo "[ERROR] Cannot find 'info.json'"
         fi
 
-        TMPFN=/tmp/.pandocTask--$PROJNAME-$DIRNAME.md
+        TMPFN="/tmp/.pandocTask--$PROJNAME-$DIRNAME.md"
         buildTmpFile "$PROJDIR/$DIRNAME"
 
         ### Start compiling
-        pandoc $TMPFN \
+        pandoc "$TMPFN" \
             $PANDOC_LATEX_VARS \
             -H "$PWD/.tex/header.tex" \
-            -V mainfont='Libertinus Serif' \
-            -V sansfont='Inter' \
-            -V monofont='JetBrains Mono NL' \
             -V author="$(getmetainfo .author)" \
-            -V date="$(date +%Y-%m-%d)" \
+            -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
             -o "$PROJDIR/$DIRNAME.pdf" 
 
         ### Send to destination
         mkdir -p "$PWD/_dist/$PROJNAME"
         cp -af "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
 
-        rm $TMPFN
+        rm "$TMPFN"
     fi
 done
 
