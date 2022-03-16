@@ -13,11 +13,12 @@ fi
 PANDOC_LATEX_VARS="
 -s
 -V papersize:a4
--V geometry=textwidth=36em,tmargin=25mm,bmargin=32mm
+-V geometry=textwidth=35em,tmargin=25mm,bmargin=32mm
 -V hyperrefoptions=colorlinks=false,pdfpagemode=FullScreen
 -V fontsize=12pt
 -f markdown
 -t pdf
+--listings
 --number-sections
 --toc-depth=2
 --shift-heading-level-by=-1
@@ -27,6 +28,20 @@ PANDOC_LATEX_VARS="
 
 function getmetainfo() {
     jq -rM $1 $DIRPATH/info.json
+}
+function buildTmpFile() {
+    TASKDIR="$1"
+    printf "" > $TMPFN
+    TOTALCOUNT="$(ls $TASKDIR/*.md | wc -l)"
+    CURRENTCOUNT=1
+    for MDFILE in $(ls $TASKDIR/*.md); do
+        cat $MDFILE >> $TMPFN
+        if [[ $CURRENTCOUNT != $TOTALCOUNT ]]; then
+            printf "\n\n\pagebreak\n\n" >> $TMPFN
+        fi
+        CURRENTCOUNT="$((CURRENTCOUNT+1))"
+    done
+    sed "s|PROJNAME|$PROJNAME/$DIRNAME|g" "$PWD/.tex/footer.tex" >> $TMPFN
 }
 
 mkdir -p "$PWD/_dist"
@@ -39,19 +54,25 @@ for DIRPATH in $PROJDIR/*; do
             echo "[ERROR] Cannot find 'info.json'"
         fi
 
+        TMPFN=/tmp/.pandocTask--$PROJNAME-$DIRNAME.md
+        buildTmpFile "$PROJDIR/$DIRNAME"
+
         ### Start compiling
-        cat \
-            "$PROJDIR/$DIRNAME"/*.md \
-            "$PWD/.tex/footer.tex" \
-        | pandoc \
+        pandoc $TMPFN \
             $PANDOC_LATEX_VARS \
+            -H "$PWD/.tex/header.tex" \
             -V mainfont='Libertinus Serif' \
+            -V sansfont='Inter' \
             -V monofont='JetBrains Mono NL' \
             -V author="$(getmetainfo .author)" \
             -V date="$(date +%Y-%m-%d)" \
-            -o "$PROJDIR/$DIRNAME.pdf"
+            -o "$PROJDIR/$DIRNAME.pdf" 
+
+        ### Send to destination
         mkdir -p "$PWD/_dist/$PROJNAME"
         cp -af "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+
+        rm $TMPFN
     fi
 done
 
