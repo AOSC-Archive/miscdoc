@@ -27,22 +27,22 @@ Our main workflow consists of the following steps:
 DeployKit shall ask the user to select the boot mode (EFI or BIOS).
 
 If the user selects EFI:
-This program shall ask the user to select the partitions ESP and ROOT, from the given list of partitions.
+DK shall ask the user to select the partitions ESP and ROOT, from the given list of partitions.
 
 If the user selects BIOS:
-This program shall ask the user to select the partition ROOT, from the given list of partitions.
+DK shall ask the user to select the partition ROOT, from the given list of partitions.
 
 #### Go for Management
 
 If the user claims that they need to manage partitions,
-this program shall spawn an interactive shell,
+DK shall spawn an interactive shell,
 where the user may use CLI/TUI tools like `cfdisk` and `parted` to manage the disk layout.
 When the interactive shell exits, the user shall be asked the same question,
 with the new partitions available in the list.
 
 #### Partition Size Warning
 
-If the user selects any partition, this program shall determine whether the partition is big enough according to the following standard:
+If the user selects any partition, DK shall determine whether the partition is big enough according to the following standard:
 
 | Partition | Size Threshold |
 | --------- | -------------- |
@@ -52,12 +52,12 @@ If the user selects any partition, this program shall determine whether the part
 - ESP: 200 MiB
 - ROOT: 25 GiB
 
-If the partition is not big enough, this program shall inform the user with a dialogue,
+If the partition is not big enough, DK shall inform the user with a dialogue,
 requiring an extra confirmation.
 
 #### Other Details
 
-According to the choices made by the user, this program shall set partition flags (i.e. `boot` and `esp`) properly.
+According to the choices made by the user, DK shall set partition flags (i.e. `boot` and `esp`) properly.
 
 
 
@@ -88,7 +88,7 @@ DeployKit shall mount the formatted filesystems at proper locations:
 ### Select Mirror Server
 
 DeployKit asks the user to select a mirror server.
-The URL for the list of mirror servers is hardcoded in this program when building.
+The URL for the list of mirror servers is hardcoded in DK when building.
 
 The list contains certain information for each mirror server, e.g. title, location, and sponsor.
 
@@ -186,7 +186,7 @@ According to the boot mode as selected in Step 1, DeployKit shall install the bo
 ### Multiple Instances
 
 DeployKit cannot run multiple instances simultaneously.
-This program may use a file lock to prohibit multitasking.
+DK may use a file lock to prohibit multitasking.
 
 
 

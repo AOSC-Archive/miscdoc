@@ -1,5 +1,6 @@
 # AOSC DeployKit: Product Requirement Document
 
+
 ## Abstract
 
 This document describes the feature requirements for DeployKit, a software which is designed to assist the installation of AOSC OS.
@@ -11,6 +12,7 @@ AOSC OS has a long history of manual installation, like Arch Linux or Gentoo.
 However, manual installation is considered unfriendly for new users,
 especially when some distributions like Ubuntu have much smoother installation experience.
 Therefore, the community decided to create a friendly installer program, under the name `DeployKit` or `aoscdk-rs`.
+In the following text, this program may also be referred as  "DK" or "this program".
 
 
 ### Working Environment
@@ -25,7 +27,7 @@ Compatibility with Retro architectures (e.g. `ppc64el`) will be a surprise, and 
 #### Software
 
 DeployKit shall work in a generic LiveCD environment, inside a generic interactive shell (hopefully `bash`).
-This program shall work in a TUI fashion and shall not require any GUI.
+DK shall work in a TUI fashion and shall not require any GUI.
 
 
 ### Usability Objectives
