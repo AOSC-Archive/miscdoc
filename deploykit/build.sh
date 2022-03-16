@@ -15,7 +15,7 @@ fi
 PANDOC_LATEX_VARS="
 -s
 -V papersize:a4
--V geometry=textwidth=36em,vmargin=32mm
+-V geometry=textwidth=36em,tmargin=25mm,bmargin=32mm
 -V hyperrefoptions=colorlinks=false,pdfpagemode=FullScreen
 -V fontsize=12pt
 -f markdown
@@ -41,7 +41,8 @@ for DIRPATH in $PROJDIR/*; do
             "$PWD/.tex/footer.tex" \
         | pandoc \
             $PANDOC_LATEX_VARS \
-            -V mainfont='QTBookmann' \
+            -V mainfont='Libertinus Serif' \
+            -V monofont='JetBrains Mono NL' \
             -V author="$info_AUTHOR" \
             -V date="$(date +%Y-%m-%d)" \
             -o "$PROJDIR/$DIRNAME.pdf"
