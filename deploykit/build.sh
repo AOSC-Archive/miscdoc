@@ -2,8 +2,6 @@
 
 PROJDIR="$(dirname $(realpath "$0"))"
 PROJNAME="$(basename "$PROJDIR")"
-echo $PROJNAME
-# exit 0
 
 if [[ ! -e $PWD/README.md ]]; then
     echo "[ERROR] You may only invoke this script at the root of the repository, where 'README.md' is located. Run './$(basename $PWD)/build.sh' instead."
@@ -27,15 +25,21 @@ PANDOC_LATEX_VARS="
 --toc
 "
 
+function getmetainfo() {
+    jq -rM $1 $DIRPATH/info.json
+}
+
 mkdir -p "$PWD/_dist"
 for DIRPATH in $PROJDIR/*; do
     if [[ -d $DIRPATH ]]; then
         DIRNAME="$(basename "$DIRPATH")"
         echo "[INFO] Building document $DIRPATH"
+
         if [[ ! -e $DIRPATH/info.json ]]; then
             echo "[ERROR] Cannot find 'info.json'"
         fi
-        info_AUTHOR="$(jq -rM .author $DIRPATH/info.json)"
+
+        ### Start compiling
         cat \
             "$PROJDIR/$DIRNAME"/*.md \
             "$PWD/.tex/footer.tex" \
@@ -43,7 +47,7 @@ for DIRPATH in $PROJDIR/*; do
             $PANDOC_LATEX_VARS \
             -V mainfont='Libertinus Serif' \
             -V monofont='JetBrains Mono NL' \
-            -V author="$info_AUTHOR" \
+            -V author="$(getmetainfo .author)" \
             -V date="$(date +%Y-%m-%d)" \
             -o "$PROJDIR/$DIRNAME.pdf"
         mkdir -p "$PWD/_dist/$PROJNAME"
