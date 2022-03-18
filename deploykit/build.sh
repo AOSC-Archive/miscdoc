@@ -73,7 +73,7 @@ for DIRPATH in $PROJDIR/*; do
 
         ### Send to destination
         mkdir -p "$PWD/_dist/$PROJNAME"
-        cp -af "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+        mv "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
 
         rm "$TMPFN"
     fi
