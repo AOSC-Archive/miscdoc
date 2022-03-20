@@ -31,8 +31,13 @@ function getmetainfo() {
 }
 function buildTmpFile() {
     TASKDIR="$1"
+
+    ### Build _FullText.md
+    printf "(This full-text file is generated from the source files.)\n\n\n\n" > $TASKDIR/_FullText.md
+    cat $TASKDIR/*-*.md >> $TASKDIR/_FullText.md
+
+    ### Build TMPFN
     printf "" > $TMPFN
-    cat $TASKDIR/*-*.md > $TASKDIR/_FullText.md
     TOTALCOUNT="$(ls $TASKDIR/*-*.md | wc -l)"
     CURRENTCOUNT=1
     for MDFILE in $(ls $TASKDIR/*-*.md); do
