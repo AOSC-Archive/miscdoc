@@ -1,17 +1,35 @@
 \usepackage{xcolor}
-\usepackage{titlesec}
 \usepackage{titling}
 \usepackage{datetime2}
+\usepackage{etoolbox}
+
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries\sffamily}
+\titleformat*{\subsubsection}{\fontspec[Ligatures=TeX]{Inter Semi Bold Italic}\normalsize}
+
+\let\OldTOC\tableofcontents
+\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\vspace{20pt}\hrule\par\vspace{5pt}\section*{Abstract}}
+
+%%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
+% \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
+% \XeTeXlinebreaklocale "zh" 
+% \XeTeXlinebreakskip = 0pt plus 1pt 
 
 \hypersetup{
     colorlinks=false,
     pdfpagemode=FullScreen
 }
 
-\setmainfont{XCharter}
-\setromanfont{XCharter}
+
+% Serif fonts: XCharter, Nimbus Roman, QTPalatine, QTBookmann, NewComputerModern, Latin Modern Roman
+\setmainfont{Nimbus Roman}
+\setromanfont{Nimbus Roman}
 \setsansfont{Inter}
 \setmonofont{JetBrains Mono NL}
+% \setCJKmainfont{Noto Serif CJK SC}
+% \setCJKromanfont{Noto Serif CJK SC}
+% \setCJKsansfont{Noto Sans CJK SC}
+% \setCJKmonofont{Noto Sans CJK SC}
 
 \linespread{1.1}
 
@@ -30,31 +48,37 @@
 	linewidth=\textwidth
 }
 
-\titleformat*{\section}{\Large\bfseries\sffamily}
 
 
+\renewcommand{\maketitle}[0]{
+    \noindent\begin{minipage}{\linewidth}
+        \center
+        \sffamily
+        \footnotesize
+        % \fontspec{Noto Serif CJK SC}
+        \normalsize
+        Anthon Open Source Community\par
+        \vspace{15pt}
 
+        \linespread{1.0}
+        \sffamily
+        \fontspec[Ligatures=TeX]{Latin Modern Roman}
+        \Large
+        % \LARGE
+        \thetitle\par
+        \vspace{15pt}
+        
+        \mdseries
+        \sffamily
+        \normalsize
+        \theauthor\par
+        \vspace{5pt}
 
-
-
-
-
-\pretitle{\begin{center}{\fontspec{Noto Serif CJK SC}\normalsize{Anthon Open Source Community}}\par\vspace{1mm}\fontspec{Latin Modern Roman}\Large\mdseries}
-
-\preauthor{%
-    \vspace{1mm}
-    \sffamily
-    \fontspec{Noto Serif CJK SC}
-    \begin{center}
-    \normalsize \lineskip 0.75em%
+        \normalsize
+        \thedate\par
+        \vspace{15pt}
+        
+        \hrule
+    \end{minipage}
 }
-\postauthor{%
-    \end{center}
-}
 
-\predate{%
-    \sffamily
-    \fontspec{Noto Serif CJK SC}
-	\begin{center}
-	\small
-}

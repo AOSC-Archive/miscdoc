@@ -1,7 +1,5 @@
 # DeployKit: Product Requirement Document
 
-------
-
 
 This document is made for demonstrating the documentation management system, and does not necessarily reflect the community consensus on DeployKit the software itself.
 
