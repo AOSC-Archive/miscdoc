@@ -32,9 +32,10 @@ function getmetainfo() {
 function buildTmpFile() {
     TASKDIR="$1"
     printf "" > $TMPFN
-    TOTALCOUNT="$(ls $TASKDIR/*.md | wc -l)"
+    cat $TASKDIR/*-*.md > $TASKDIR/_FullText.md
+    TOTALCOUNT="$(ls $TASKDIR/*-*.md | wc -l)"
     CURRENTCOUNT=1
-    for MDFILE in $(ls $TASKDIR/*.md); do
+    for MDFILE in $(ls $TASKDIR/*-*.md); do
         cat $MDFILE >> $TMPFN
         if [[ $CURRENTCOUNT != $TOTALCOUNT ]]; then
             printf "\n\n\clearpage\n\n" >> $TMPFN
