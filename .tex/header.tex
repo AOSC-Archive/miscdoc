@@ -2,13 +2,19 @@
 \usepackage{titling}
 \usepackage{datetime2}
 \usepackage{etoolbox}
+\usepackage{graphicx}
+\graphicspath{{./}}
 
 \usepackage{titlesec}
 \titleformat*{\section}{\LARGE\bfseries\sffamily}
-\titleformat*{\subsubsection}{\fontspec[Ligatures=TeX]{Inter Semi Bold Italic}\normalsize}
+\titleformat*{\subsubsection}{\sffamily\normalsize\bfseries\itshape}
 
+% TOC
 \let\OldTOC\tableofcontents
-\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\vspace{20pt}\hrule\par\vspace{5pt}\section*{Abstract}}
+\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\clearpage\section*{Abstract}}
+
+% Block quote
+\renewenvironment{quote}{\hspace{2em}\begin{minipage}{\linewidth-2em}\fontspec{XCharter}}{\end{minipage}}
 
 %%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
 % \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
@@ -21,9 +27,9 @@
 }
 
 
-% Serif fonts: XCharter, Nimbus Roman, QTPalatine, QTBookmann, NewComputerModern, Latin Modern Roman
-\setmainfont{Nimbus Roman}
-\setromanfont{Nimbus Roman}
+% Serif fonts: XCharter, QTPalatine, QTBookmann, NewComputerModern, Latin Modern Roman
+\setmainfont{Inter}
+\setromanfont{Inter}
 \setsansfont{Inter}
 \setmonofont{JetBrains Mono NL}
 % \setCJKmainfont{Noto Serif CJK SC}
@@ -55,18 +61,19 @@
         \center
         \sffamily
         \footnotesize
-        % \fontspec{Noto Serif CJK SC}
         \normalsize
+        \includegraphics[width=20mm]{aosc-logo.png}\par
+        \vspace{10pt}
+
         Anthon Open Source Community\par
-        \vspace{15pt}
+        \vspace{20pt}
 
         \linespread{1.0}
         \sffamily
-        \fontspec[Ligatures=TeX]{Latin Modern Roman}
+        \fontspec{Latin Modern Roman}
         \Large
-        % \LARGE
         \thetitle\par
-        \vspace{15pt}
+        \vspace{20pt}
         
         \mdseries
         \sffamily
@@ -76,7 +83,7 @@
 
         \normalsize
         \thedate\par
-        \vspace{15pt}
+        \vspace{25pt}
         
         \hrule
     \end{minipage}

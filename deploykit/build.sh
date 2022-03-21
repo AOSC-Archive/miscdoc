@@ -13,9 +13,9 @@ fi
 PANDOC_LATEX_VARS="
 -s
 -V papersize:a4
--V geometry=textwidth=35em,tmargin=25mm,bmargin=32mm
+-V geometry=textwidth=38em,tmargin=25mm,bmargin=32mm
 -V hyperrefoptions=colorlinks=false,pdfpagemode=FullScreen
--V fontsize=12pt
+-V fontsize=11pt
 -f markdown
 -t pdf
 --listings
@@ -32,9 +32,11 @@ function getmetainfo() {
 function buildTmpFile() {
     TASKDIR="$1"
 
-    ### Build _FullText.md
-    printf "(This full-text file is generated from the source files.)\n\n\n\n" > $TASKDIR/_FullText.md
-    cat $TASKDIR/*-*.md >> $TASKDIR/_FullText.md
+    ### Build README.md
+    printf "Notes:\n\n" > $TASKDIR/README.md
+    printf -- "- This full-text file is generated from the source files and shall not be edited manually.\n" >> $TASKDIR/README.md
+    printf -- "- PDF: https://neruthesgithubdistweb.vercel.app/miscdoc/$PROJNAME/${DIRNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
+    cat $TASKDIR/*-*.md >> $TASKDIR/README.md
 
     ### Build TMPFN
     printf "" > $TMPFN
@@ -51,12 +53,11 @@ function buildTmpFile() {
         printf "\n\n\clearpage\n\n" >> $TMPFN
         cat $TASKDIR/999-appendix.tex >> $TMPFN
     fi
-    sed "s|PROJNAME|$PROJNAME/$DIRNAME|g" "$PWD/.tex/footer.tex" \
+    sed "s|PROJNAMEANDDIRNAME|$PROJNAME/$DIRNAME|g" "$PWD/.tex/footer.tex" \
         | sed 's|CONTRIBUTORSLIST|$(getmetainfo .contributors)|' \
         >> $TMPFN
 }
 
-mkdir -p "$PWD/_dist"
 for DIRPATH in $PROJDIR/*; do
     if [[ -d $DIRPATH ]]; then
         DIRNAME="$(basename "$DIRPATH")"
@@ -70,17 +71,16 @@ for DIRPATH in $PROJDIR/*; do
         buildTmpFile "$PROJDIR/$DIRNAME"
 
         ### Start compiling
+        mkdir -p "$PWD/_dist/$PROJNAME"
+        PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
         pandoc "$TMPFN" \
             $PANDOC_LATEX_VARS \
             -H "$PWD/.tex/header.tex" \
             -V author="$(getmetainfo .author)" \
             -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
-            -o "$PROJDIR/$DIRNAME.pdf" 
-
-        ### Send to destination
-        mkdir -p "$PWD/_dist/$PROJNAME"
-        mv "$PROJDIR/$DIRNAME.pdf" "$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
-
+            -o "$PDFPATH"
+        
+        du -h "$PDFPATH"
         rm "$TMPFN"
     fi
 done
