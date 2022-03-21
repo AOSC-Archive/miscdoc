@@ -1,7 +1,7 @@
 Notes:
 
 - This full-text file is generated from the source files and shall not be edited manually.
-- PDF: https://neruthesgithubdistweb.vercel.app/miscdoc/deploykit/Product-Requirement.pdf
+- PDF: https://repo.aosc.io/misc/neruthes/githubdistweb/miscdoc/deploykit/Product-Requirement.pdf
 
 
 

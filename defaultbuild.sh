@@ -18,7 +18,7 @@ fi
 PANDOC_LATEX_VARS="
 -s
 -V papersize:a4
--V geometry=textwidth=38em,tmargin=25mm,bmargin=32mm
+-V geometry=textwidth=39em,tmargin=25mm,bmargin=25mm
 -V hyperrefoptions=colorlinks=false,pdfpagemode=FullScreen
 -V fontsize=11pt
 -f markdown
@@ -31,16 +31,16 @@ PANDOC_LATEX_VARS="
 --toc
 "
 
-function getmetainfo() {
+function _getmetainfo() {
     jq -rM $1 $DIRPATH/info.json
 }
-function buildTmpFile() {
+function _buildTmpFile() {
     TASKDIR="$1"
 
     ### Build README.md
     printf "Notes:\n\n" > $TASKDIR/README.md
     printf -- "- This full-text file is generated from the source files and shall not be edited manually.\n" >> $TASKDIR/README.md
-    printf -- "- PDF: https://neruthesgithubdistweb.vercel.app/miscdoc/$PROJNAME/${DIRNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
+    printf -- "- PDF: https://repo.aosc.io/misc/neruthes/githubdistweb/miscdoc/$PROJNAME/${DIRNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
     cat $TASKDIR/*-*.md >> $TASKDIR/README.md
 
     ### Build TMPFN
@@ -65,36 +65,47 @@ function buildTmpFile() {
         | sed "s|BRANCHNAME|$(git branch --show-current)|" \
         > $TMPDIR/footer.tex
 }
+function _callPandoc() {
+    mkdir -p "$PWD/_dist/$PROJNAME"
+    PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+    pandoc "$TMPFN" \
+        $PANDOC_LATEX_VARS \
+        -V author="$(_getmetainfo .author)" \
+        -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
+        -H "$PWD/.tex/header.tex" \
+        --include-after-body="$TMPDIR/footer.tex" \
+        -o "$PDFPATH"
+}
+function _buildTarget() {
+    DIRPATH="$1"
+    DIRNAME="$(basename "$DIRPATH")"
+    echo "[INFO] Building document '$DIRNAME'"
+
+    if [[ ! -e $DIRPATH/info.json ]]; then
+        echo "[ERROR] Cannot find 'info.json'"
+    fi
+
+    TMPDIR="/tmp/aosc-miscdoc-pandoc-tmp-$(uuidgen v4).$PROJNAME.$DIRNAME"
+    mkdir -p "$TMPDIR"
+
+    TMPFN="/tmp/.pandocTask--$PROJNAME-$DIRNAME.md"
+    _buildTmpFile "$PROJDIR/$DIRNAME"
+
+    ### Start compiling
+    mkdir -p "$PWD/_dist/$PROJNAME"
+    PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+    if [[ ! -e $PWD/.DoNotMakePDF ]]; then
+        _callPandoc
+    fi
+    
+    du -h "$PDFPATH"
+    rm "$TMPFN"
+    rm -r "$TMPDIR"
+}
 
 for DIRPATH in $PROJDIR/*; do
     if [[ -e $DIRPATH/info.json ]]; then
-        DIRNAME="$(basename "$DIRPATH")"
-        echo "[INFO] Building document '$DIRNAME'"
-
-        if [[ ! -e $DIRPATH/info.json ]]; then
-            echo "[ERROR] Cannot find 'info.json'"
-        fi
-
-        TMPDIR="/tmp/aosc-miscdoc-pandoc-tmp-$(uuidgen v4).$PROJNAME.$DIRNAME"
-        mkdir -p "$TMPDIR"
-
-        TMPFN="/tmp/.pandocTask--$PROJNAME-$DIRNAME.md"
-        buildTmpFile "$PROJDIR/$DIRNAME"
-
-        ### Start compiling
-        mkdir -p "$PWD/_dist/$PROJNAME"
-        PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
-        pandoc "$TMPFN" \
-            $PANDOC_LATEX_VARS \
-            -V author="$(getmetainfo .author)" \
-            -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
-            -H "$PWD/.tex/header.tex" \
-            --include-after-body="$TMPDIR/footer.tex" \
-            -o "$PDFPATH"
-        
-        du -h "$PDFPATH"
-        rm "$TMPFN"
-        rm -r "$TMPDIR"
+        _buildTarget "$DIRPATH"
     fi
 done
 
