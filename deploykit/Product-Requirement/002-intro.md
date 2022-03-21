@@ -5,7 +5,7 @@
 AOSC OS has a long history of manual installation, like Arch Linux or Gentoo.
 However, manual installation is considered unfriendly for new users,
 especially when some distributions like Ubuntu have much smoother installation experience.
-Therefore, the community decided to create a friendly installer program, under the name `DeployKit` or `aoscdk-rs`.
+Therefore, the community decided to create a friendly installer program, under the name "`DeployKit`" or "`aoscdk-rs`".
 In the following text, this program may also be referred as  "DK" or "this program".
 
 The source code of DeployKit may be found at:

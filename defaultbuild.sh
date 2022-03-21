@@ -1,10 +1,15 @@
 #!/bin/bash
 
-PROJDIR="$(dirname $(realpath "$0"))"
+if [[ -z $1 ]]; then
+    echo "Usage:"
+    echo "    ./defaultbuild.sh   {PROJNAME}"
+fi
+
+PROJDIR="$(realpath "$1")"
 PROJNAME="$(basename "$PROJDIR")"
 
 if [[ ! -e $PWD/README.md ]]; then
-    echo "[ERROR] You may only invoke this script at the root of the repository, where 'README.md' is located. Run './$(basename $PWD)/build.sh' instead."
+    echo "[ERROR] You may only invoke this script at the root of the repository, where 'README.md' is located. Run './$(basename "$PWD")/build.sh' instead."
     exit 1
 fi
 
@@ -53,19 +58,25 @@ function buildTmpFile() {
         printf "\n\n\clearpage\n\n" >> $TMPFN
         cat $TASKDIR/999-appendix.tex >> $TMPFN
     fi
-    sed "s|PROJNAMEANDDIRNAME|$PROJNAME/$DIRNAME|g" "$PWD/.tex/footer.tex" \
-        | sed 's|CONTRIBUTORSLIST|$(getmetainfo .contributors)|' \
-        >> $TMPFN
+
+    ### Build Footer
+    cat "$PWD/.tex/footer.tex" \
+        | sed "s|PROJNAMEANDDIRNAME|$PROJNAME/$DIRNAME|g"  \
+        | sed "s|BRANCHNAME|$(git branch --show-current)|" \
+        > $TMPDIR/footer.tex
 }
 
 for DIRPATH in $PROJDIR/*; do
-    if [[ -d $DIRPATH ]]; then
+    if [[ -e $DIRPATH/info.json ]]; then
         DIRNAME="$(basename "$DIRPATH")"
         echo "[INFO] Building document '$DIRNAME'"
 
         if [[ ! -e $DIRPATH/info.json ]]; then
             echo "[ERROR] Cannot find 'info.json'"
         fi
+
+        TMPDIR="/tmp/aosc-miscdoc-pandoc-tmp-$(uuidgen v4).$PROJNAME.$DIRNAME"
+        mkdir -p "$TMPDIR"
 
         TMPFN="/tmp/.pandocTask--$PROJNAME-$DIRNAME.md"
         buildTmpFile "$PROJDIR/$DIRNAME"
@@ -75,13 +86,15 @@ for DIRPATH in $PROJDIR/*; do
         PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
         pandoc "$TMPFN" \
             $PANDOC_LATEX_VARS \
-            -H "$PWD/.tex/header.tex" \
             -V author="$(getmetainfo .author)" \
             -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
+            -H "$PWD/.tex/header.tex" \
+            --include-after-body="$TMPDIR/footer.tex" \
             -o "$PDFPATH"
         
         du -h "$PDFPATH"
         rm "$TMPFN"
+        rm -r "$TMPDIR"
     fi
 done
 

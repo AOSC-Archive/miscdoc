@@ -99,11 +99,20 @@ DeployKit asks the user to select a profile from the list, which was fetched fro
 A profile is a classifier of a stage3 tarball,
 which corresponds to the stage3 tarball filename minus the versioning information (e.g. date of building).
 
-A profile should look like "`aosc-os_gnome+nvidia_amd64`" (or a human-readable version "`GNOME (with NVIDIA) (arm64)`"),
-which corresponds to the stage3 tarball named "`aosc-os_gnome+nvidia_20220122_amd64.tar.xz`".
+A profile should look like:
+
+> aosc-os_gnome+nvidia_amd64
+
+... or a human-readable version:
+
+> GNOME (with NVIDIA) (amd64)
+
+... which corresponds to the stage3 tarball named:
+
+> aosc-os_gnome+nvidia_20220122_amd64.tar.xz
 
 It will be nice if the list can be organized hierarchically,
-as a two-layer `ARCH/DE` tree, where the current architecture may be highlighted (e.g. "`amd64 (current device)`").
+as a two-layer `ARCH/DE` tree, where the current architecture may be highlighted (e.g. "`amd64 *`").
 
 
 

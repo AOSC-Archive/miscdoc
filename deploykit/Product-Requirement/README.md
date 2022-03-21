@@ -8,9 +8,12 @@ Notes:
 # DeployKit: Product Requirement Document
 
 
-This document is made for demonstrating the documentation management system, and does not necessarily reflect the community consensus on DeployKit the software itself.
+*This document is written as a demo for the documentation management system,
+and does not necessarily reflect the community consensus on DeployKit the software itself.
+This notice may be removed when a consensus is made.*
 
-This document describes the feature requirements for DeployKit, a software which is designed to assist the installation of AOSC OS.
+This document describes the feature requirements for DeployKit,
+a software which is designed to assist the installation of AOSC OS.
 
 ## Introduction
 
@@ -19,7 +22,7 @@ This document describes the feature requirements for DeployKit, a software which
 AOSC OS has a long history of manual installation, like Arch Linux or Gentoo.
 However, manual installation is considered unfriendly for new users,
 especially when some distributions like Ubuntu have much smoother installation experience.
-Therefore, the community decided to create a friendly installer program, under the name `DeployKit` or `aoscdk-rs`.
+Therefore, the community decided to create a friendly installer program, under the name "`DeployKit`" or "`aoscdk-rs`".
 In the following text, this program may also be referred as  "DK" or "this program".
 
 The source code of DeployKit may be found at:
@@ -155,11 +158,20 @@ DeployKit asks the user to select a profile from the list, which was fetched fro
 A profile is a classifier of a stage3 tarball,
 which corresponds to the stage3 tarball filename minus the versioning information (e.g. date of building).
 
-A profile should look like "`aosc-os_gnome+nvidia_amd64`" (or a human-readable version "`GNOME (with NVIDIA) (arm64)`"),
-which corresponds to the stage3 tarball named "`aosc-os_gnome+nvidia_20220122_amd64.tar.xz`".
+A profile should look like:
+
+> aosc-os_gnome+nvidia_amd64
+
+... or a human-readable version:
+
+> GNOME (with NVIDIA) (amd64)
+
+... which corresponds to the stage3 tarball named:
+
+> aosc-os_gnome+nvidia_20220122_amd64.tar.xz
 
 It will be nice if the list can be organized hierarchically,
-as a two-layer `ARCH/DE` tree, where the current architecture may be highlighted (e.g. "`amd64 (current device)`").
+as a two-layer `ARCH/DE` tree, where the current architecture may be highlighted (e.g. "`amd64 *`").
 
 
 

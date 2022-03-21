@@ -9,6 +9,11 @@
 \titleformat*{\section}{\LARGE\bfseries\sffamily}
 \titleformat*{\subsubsection}{\sffamily\normalsize\bfseries\itshape}
 
+\hypersetup{
+    colorlinks=false,
+    pdfpagemode=FullScreen
+}
+
 % TOC
 \let\OldTOC\tableofcontents
 \renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\clearpage\section*{Abstract}}
@@ -18,15 +23,8 @@
 
 %%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
 % \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
-% \XeTeXlinebreaklocale "zh" 
-% \XeTeXlinebreakskip = 0pt plus 1pt 
-
-\hypersetup{
-    colorlinks=false,
-    pdfpagemode=FullScreen
-}
-
-
+% \XeTeXlinebreaklocale "zh"
+% \XeTeXlinebreakskip = 0pt plus 1pt
 % Serif fonts: XCharter, QTPalatine, QTBookmann, NewComputerModern, Latin Modern Roman
 \setmainfont{Inter}
 \setromanfont{Inter}
@@ -63,7 +61,7 @@
         \footnotesize
         \normalsize
         \includegraphics[width=20mm]{aosc-logo.png}\par
-        \vspace{10pt}
+        \vspace{15pt}
 
         Anthon Open Source Community\par
         \vspace{20pt}
