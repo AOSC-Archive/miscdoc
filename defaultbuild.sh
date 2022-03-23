@@ -2,7 +2,7 @@
 
 if [[ -z $1 ]]; then
     echo "Usage:"
-    echo "    ./defaultbuild.sh   {PROJNAME}"
+    echo "    ./defaultbuild.sh   {PROJNAME}   [DOCNAME]"
 fi
 
 PROJDIR="$(realpath "$1")"
@@ -103,9 +103,13 @@ function _buildTarget() {
     rm -r "$TMPDIR"
 }
 
-for DIRPATH in $PROJDIR/*; do
-    if [[ -e $DIRPATH/info.json ]]; then
-        _buildTarget "$DIRPATH"
-    fi
-done
+if [[ -z "$2" ]]; then
+    for DIRPATH in $PROJDIR/*; do
+        if [[ -e $DIRPATH/info.json ]]; then
+            _buildTarget "$DIRPATH"
+        fi
+    done
+else
+    _buildTarget $PROJDIR/$2
+fi
 
