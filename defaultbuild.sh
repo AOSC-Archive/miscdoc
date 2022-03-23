@@ -62,20 +62,29 @@ function _buildTmpFile() {
     ### Build Footer
     cat "$PWD/.tex/footer.tex" \
         | sed "s|PROJNAMEANDDIRNAME|$PROJNAME/$DIRNAME|g"  \
-        | sed "s|BRANCHNAME|$(git branch --show-current)|" \
         > $TMPDIR/footer.tex
 }
+
 function _callPandoc() {
     mkdir -p "$PWD/_dist/$PROJNAME"
     PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+
+    ### Which writing system?
+    DOC_PROP_SCRIPT="$(_getmetainfo .script)"
+    if [[ $DOC_PROP_SCRIPT != latin ]]; then
+        EXTRA_SCRIPT_TAG="-$DOC_PROP_SCRIPT"
+    fi
+
+    ### Actually compile PDF
     pandoc "$TMPFN" \
         $PANDOC_LATEX_VARS \
         -V author="$(_getmetainfo .author)" \
         -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
-        -H "$PWD/.tex/header.tex" \
+        -H "$PWD/.tex/header$EXTRA_SCRIPT_TAG.tex" \
         --include-after-body="$TMPDIR/footer.tex" \
         -o "$PDFPATH"
 }
+
 function _buildTarget() {
     DIRPATH="$1"
     DIRNAME="$(basename "$DIRPATH")"

@@ -17,7 +17,8 @@
 
 % TOC
 \let\OldTOC\tableofcontents
-\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\clearpage\section*{Abstract}}
+\newcommand{\abstractsectionname}[0]{Abstract}
+\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\clearpage\section*{\abstractsectionname}}
 
 % Block quote
 \renewenvironment{quote}{\hspace{2em}\begin{minipage}{\linewidth-2em}\fontspec{XCharter}}{\end{minipage}}
@@ -70,6 +71,7 @@
         \linespread{1.0}
         \sffamily
         \fontspec{XCharter}
+        \CJKfontspec{Noto Serif CJK SC}
         \bfseries
         \Large
         \thetitle\par
