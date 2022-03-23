@@ -12,7 +12,7 @@ This is a documentation management repo, where we keep miscellaneous documents. 
 
 PDF artifacts are available on these mirrors:
 
-- https://repo.aosc.io/misc/neruthes/githubdistweb/miscdoc/
+- https://repo.aosc.io/misc/artifacts/miscdoc/
 - https://neruthesgithubdistweb.vercel.app/miscdoc/
 
 

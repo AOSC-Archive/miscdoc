@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rsync -av --delete _dist/ repo.aosc.io:/mirror/misc/neruthes/githubdistweb/miscdoc/
+rsync -av --delete _dist/ repo.aosc.io:/mirror/misc/artifacts/miscdoc/

@@ -40,7 +40,7 @@ function _buildTmpFile() {
     ### Build README.md
     printf "Notes:\n\n" > $TASKDIR/README.md
     printf -- "- This full-text file is generated from the source files and shall not be edited manually.\n" >> $TASKDIR/README.md
-    printf -- "- PDF: https://repo.aosc.io/misc/neruthes/githubdistweb/miscdoc/$PROJNAME/${DIRNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
+    printf -- "- PDF: https://repo.aosc.io/misc/artifacts/miscdoc/$PROJNAME/${DIRNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
     cat $TASKDIR/*-*.md >> $TASKDIR/README.md
 
     ### Build TMPFN
