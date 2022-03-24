@@ -4,7 +4,7 @@ BRANCH_NAME="$(git branch --show-current)"
 
 if [[ " $@ " == *" --force "* ]]; then
     f_FORCE_ALL=y
-    echo "[INFO] Starting full rebuild..."
+    echo "[INFO] Starting full rebuild under '--force' parameter..."
 else
     echo "[INFO] Building for the current branch '$BRANCH_NAME'..."
 fi

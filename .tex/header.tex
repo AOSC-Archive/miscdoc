@@ -20,7 +20,7 @@
 % TOC
 \let\OldTOC\tableofcontents
 \newcommand{\abstractsectionname}[0]{Abstract}
-\newcommand{\beforeabstractsec}[0]{}
+\newcommand{\beforeabstractsec}[0]{\vspace{18pt}\hrule\vspace{5pt}\par}
 \renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\beforeabstractsec\section*{\abstractsectionname}}
 
 % Block quote
@@ -99,3 +99,4 @@
 
 
 \setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.6}
