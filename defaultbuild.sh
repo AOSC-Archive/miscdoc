@@ -142,3 +142,6 @@ else
 fi
 
 
+if [[ " $@ " == *" --push "* ]] || [[ " $@ " == *" -p "* ]]; then
+    ./pushtomirror.sh
+fi
