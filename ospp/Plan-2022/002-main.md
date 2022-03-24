@@ -1,14 +1,3 @@
-Notes:
-
-- This full-text file is generated from the source files and shall not be edited manually.
-- PDF: https://repo.aosc.io/misc/artifacts/miscdoc/ospp/Plan-2022.pdf
-
-
-
-# 2022 年度 OSPP 对接工作计划 (RFC)
-
-
-本文当前版本仅作演示，不代表社区共识。
 ## 工作日程
 
 ### 撰写《项目管理指南》
