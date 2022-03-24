@@ -1,5 +1,3 @@
-\input{.tex/header.tex}
-
 %%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
 \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
 \XeTeXlinebreaklocale "zh"
@@ -14,7 +12,12 @@
 \setCJKsansfont{Noto Sans CJK SC}
 \setCJKmonofont{Noto Sans CJK SC}
 
+% Redefine some styles
+\titleformat*{\subsubsection}{\fontspec{Inter Semi Bold}\CJKfontspec{Noto Sans CJK SC Medium}\large}
 
-% Chinese-only
+% Redefine some commands
+\renewcommand{\realrmfamily}[0]{\fontspec{XCharter}\CJKfontspec{Noto Serif CJK SC}}
+
+% Text i18n
 \renewcommand{\contentsname}{目录}
 \renewcommand{\abstractsectionname}[0]{摘要}

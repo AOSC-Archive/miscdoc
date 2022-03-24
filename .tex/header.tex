@@ -7,21 +7,24 @@
 
 \usepackage{titlesec}
 \titleformat*{\section}{\LARGE\bfseries\sffamily}
-\titleformat*{\subsection}{\fontspec{XCharter}\Large\bfseries}
+\titleformat*{\subsection}{\realrmfamily\Large\bfseries}
 \titleformat*{\subsubsection}{\fontspec{Inter Semi Bold}\large}
 
 \hypersetup{
-    colorlinks=false,
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
     pdfpagemode=FullScreen
 }
 
 % TOC
 \let\OldTOC\tableofcontents
 \newcommand{\abstractsectionname}[0]{Abstract}
-\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\clearpage\section*{\abstractsectionname}}
+\newcommand{\beforeabstractsec}[0]{}
+\renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\beforeabstractsec\section*{\abstractsectionname}}
 
 % Block quote
-\renewenvironment{quote}{\hspace{2em}\begin{minipage}{\linewidth-2em}\fontspec{XCharter}}{\end{minipage}}
+\renewenvironment{quote}{\begin{quotation}\small\realrmfamily\parindent=0pt}{\end{quotation}}
 
 %%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
 % \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
@@ -36,6 +39,7 @@
 % \setCJKromanfont{Noto Serif CJK SC}
 % \setCJKsansfont{Noto Sans CJK SC}
 % \setCJKmonofont{Noto Sans CJK SC}
+\newcommand{\realrmfamily}[0]{\fontspec{XCharter}}
 
 \linespread{1.1}
 
@@ -71,7 +75,7 @@
         \linespread{1.0}
         \sffamily
         \fontspec{XCharter}
-        \CJKfontspec{Noto Serif CJK SC}
+        \realrmfamily
         \bfseries
         \Large
         \thetitle\par
@@ -91,3 +95,7 @@
     \end{minipage}
 }
 
+
+
+
+\setlength{\parindent}{0pt}

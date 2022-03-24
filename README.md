@@ -32,6 +32,23 @@ PDF artifacts are available on these mirrors:
 
 The `projlist` file is a list of `PROJNAME` strings.
 
+### `info.json`
+
+This file contains information for building PDF.
+
+This file should look like:
+
+```json
+{
+    "author": "Neruthes, et al.",
+    "latex_features": "abstract"
+}
+```
+
+| Field          | Description                                               |
+| -------------- | --------------------------------------------------------- |
+| author         | Names of authors, used under the title.                   |
+| latex_features | A list of features to be applied, in the specified order. Make it empty to disable all features. |
 
 
 

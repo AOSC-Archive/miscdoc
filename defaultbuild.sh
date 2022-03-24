@@ -59,6 +59,16 @@ function _buildTmpFile() {
         cat $TASKDIR/999-appendix.tex >> $TMPFN
     fi
 
+    ### Build Header
+    cat "$PWD/.tex/header.tex" > $TMPDIR/header.tex
+    if [[ "$(_getmetainfo .latex_features)" == "" ]]; then
+        echo "[INFO] Empty 'latex_features' property."
+    else
+        echo "[INFO] Applying features: '$(_getmetainfo .latex_features)'"
+        for FEAT in $(_getmetainfo .latex_features); do
+            cat "$PWD/.tex/feat-$FEAT.tex" >> $TMPDIR/header.tex
+        done
+    fi
     ### Build Footer
     cat "$PWD/.tex/footer.tex" \
         | sed "s|PROJNAMEANDDIRNAME|$PROJNAME/$DIRNAME|g"  \
@@ -80,7 +90,7 @@ function _callPandoc() {
         $PANDOC_LATEX_VARS \
         -V author="$(_getmetainfo .author)" \
         -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
-        -H "$PWD/.tex/header$EXTRA_SCRIPT_TAG.tex" \
+        -H "$TMPDIR/header.tex" \
         --include-after-body="$TMPDIR/footer.tex" \
         -o "$PDFPATH"
 }
@@ -109,6 +119,7 @@ function _buildTarget() {
     
     du -h "$PDFPATH"
     rm "$TMPFN"
+    # echo "[INFO] Remember to clear temporary files."
     rm -r "$TMPDIR"
 }
 
