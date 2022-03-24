@@ -2,11 +2,9 @@
 
 if [[ -z $1 ]]; then
     echo "Usage:"
-    echo "    ./defaultbuild.sh   {PROJNAME}   [DOCNAME]"
+    echo "    Build entire directory:       $  ./defaultbuild.sh   PROJNAME"
+    echo "    Build single document:        $  ./defaultbuild.sh   PROJNAME/DOCNAME"
 fi
-
-PROJDIR="$(realpath "$1")"
-PROJNAME="$(basename "$PROJDIR")"
 
 if [[ ! -e $PWD/README.md ]]; then
     echo "[ERROR] You may only invoke this script at the root of the repository, where 'README.md' is located. Run './$(basename "$PWD")/build.sh' instead."
@@ -89,14 +87,14 @@ function _callPandoc() {
     pandoc "$TMPFN" \
         $PANDOC_LATEX_VARS \
         -V author="$(_getmetainfo .author)" \
-        -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
+        -V date="Last build: $(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
         -H "$TMPDIR/header.tex" \
         --include-after-body="$TMPDIR/footer.tex" \
         -o "$PDFPATH"
 }
 
 function _buildTarget() {
-    DIRPATH="$1"
+    DIRPATH="$(realpath "$1")"
     DIRNAME="$(basename "$DIRPATH")"
     echo "[INFO] Building document '$DIRNAME'"
 
@@ -123,13 +121,24 @@ function _buildTarget() {
     rm -r "$TMPDIR"
 }
 
-if [[ -z "$2" ]]; then
+
+if [[ "$PWD" == "$(dirname "$(dirname "$(realpath "$1")")")" ]]; then
+    ### Is a single document
+    echo "[INFO] Building single document"
+    DOCDIR="$(realpath "$1")"
+    PROJDIR="$(dirname "$DOCDIR")"
+    PROJNAME="$(basename "$PROJDIR")"
+    _buildTarget "$(realpath $1)"
+else
+    ### Is not a single document
+    echo "[INFO] Building entire directory"
+    PROJDIR="$(realpath "$1")"
+    PROJNAME="$(basename "$PROJDIR")"
     for DIRPATH in $PROJDIR/*; do
         if [[ -e $DIRPATH/info.json ]]; then
             _buildTarget "$DIRPATH"
         fi
     done
-else
-    _buildTarget $PROJDIR/$2
 fi
+
 
