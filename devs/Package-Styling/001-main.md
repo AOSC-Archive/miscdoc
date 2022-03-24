@@ -62,8 +62,8 @@ Versioning variable define the package's version and revision levels.
 
 The `VER=`, or `$VER` variable defines the main version of the resulting package. When packaging for AOSC OS, packagers should take note of the following requirements. These requirements are presented in the table below.
 
-| Situations                                                            | Appropriate Actions                                                                                                         | Examples                                                                    |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Situations  | Appropriate Actions  | Examples  |
+| --- | --- | --- |
 | "Normal" versioning, with only "dot" separators                       | Retain version, as defined by the upstream.                                                                                 | GNOME Clocks 3.32.1 -> `VER=3.32.1`                                         |
 | Versions with letter notation(s)                                      | Lower-case all letter(s), and remove symbols surrounding the letter(s).                                                     | Bind 9.12.3-P4 -> `VER=9.12.3p4`                                            |
 | Versions with dash(es) ("-")                                          | Replace the dash(es) with plus ("+") sign(s).                                                                               | ImageMagick 6.9.10-23 -> `VER=6.9.10+23`                                    |
@@ -84,8 +84,8 @@ Source variables define the package's source(s), and in the case of a VCS (versi
 
 The `SRCTBL=`, or `$SRCTBL` variable is used when a package's source is released in the form of a single compressed archive. Requirements and recommendations are presented in the table below.
 
-| Criteria              | Required/Recommended | Appropriate Actions                                                                                                                                                               |
-| --------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Criteria | Required? | Appropriate Actions |
+| --- | --- | ------ |
 | URI schemes           | Recommended          | Use Hypertext Transfer Protocol Secure (HTTPS, https://) where possible. Avoid non-secure connections (http://) and plain FTP (File Transfer Protocol, ftp://).                   |
 | Source format         | Recommended          | Use XZ-compressed Tar-Archives (.tar.xz) where possible, other formats are considered appropriate. Avoid the inefficient BZip2-compressed Tar-Archives (.tar.bz2) where possible. |
 | Version substitutions | Required             | Source links must replace all versions with substitutions from the `$VER` variable (see above). `SRCTBL=` must not be defined with hard-coded version(s).                         |
@@ -112,8 +112,8 @@ For descriptions of different cryptographic hash algorithms, and for identificat
 
 VCS (Version Control System) based sources may use any one of the each combinations.
 
-| VCS              | Required Variables                                                                                                                                  | Additional Notes                                                                                                       |
-| ---------------- | ------------------------------------- | ------------------------------------- |
+| VCS | Required Variables | Additional Notes |
+| --- | ---- | ---- |
 | Bazaar (BZR)     | `BZRSRC=`, or `$BZRSRC`, which defines the Bazaar repository; `BZRCO=`, or `$BZRCO`, which defines the specific Bazaar revision.                    |                                                                                                                        |
 | Git              | `GITSRC=`, or `$GITSRC`, which defines the Git repository; `GITCO=`, or `$GITCO`, which defines the specific Git "checkout(s)" (a commit, or a tag) | Use Git over Hypertext Transfer Protocol Secure (HTTPS, https://) where possible.                                      |
 | Mercurial (HG)   | `HGSRC=`, or `$HGSRC`, which defines the Meruciral repository.                                                                                      | Avoid using Mecurial source(s) where possible, as support for checking out a specific revision is not yet implemented. |
@@ -167,8 +167,8 @@ Build-time dependencies should written in such a way that the package will compi
 
 When packaging for AOSC OS, please work in accordance to our [distribution feature guide](@/aosc-os/is-aosc-os-right-for-me.md). The table below digests some of the common considerations when building packages for AOSC OS.
 
-| Considerations                                   | Appropriate Actions                                                                                                                                                                                               |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Considerations | Appropriate Actions |
+| --- | ------ |
 | Features                                         | Enable all features, unless a feature is unmaintained, or violates any of the other considerations in this table.                                                                                                 |
 | Language packs (dictionaries, locale data, etc.) | Language packs must be included in the same package as the main executables, etc.                                                                                                                                 |
 | Splitting packages                               | Packages are to be remained intact, unless package comes in multiple flavours, or otherwise agreed upon by the developer majority.                                                                                |
@@ -181,8 +181,8 @@ While most packages could be built with one of the pre-defined [Autobuild Types]
 
 A general rule of thumb is to write such scripts secure (quoted) variables, sufficient comments, error control, architectural considerations, progression report, ... Writing easy-to-read and reliable build scripts is not easy, and the table below aims to aid you with making good scripting decisions.
 
-| Criteria                              | Required? | Explanations                                                                                                                                                                                                                      |
-| ------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------- |
+| Criteria | Required? | Explanations |
+| --- | --- | ------ |
 | Autobuild3 Build Templates (`ABTYPE`) | Required             | Packager should utilise [Autobuild Types](https://github.com/AOSC-Dev/autobuild3/tree/master/build) where possible, without using `autobuild/build` or `ABTYPE=self`.                                                             |
 | Error Handling                        | Required             | Build errors should be captured and handled appropriately. By default, errors are handled automatically by Autobuild3 and will result in aborted build, however, `autobuild/build` is not yet covered due to a bug in Autobuild3. |
 | Progression report                    | Requried             | Progress should be reported by appropriately employing `abinfo` and `abwarn` wrappers, this is required for packages utilising the `autobuild/build`, or `ABTYPE=self`.                                                           |
@@ -245,8 +245,8 @@ Likewise, when including patch(es) from other distributions, they should also be
 
 AOSC OS, like many other Linux Distributions, expect packaged files to be located in appropriate directories. Please reference the *non-comprehensive* table below for our standard of file placements.
 
-| Types of Files                                            | Appropriate Placements                                                                                                   |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Types of Files | Appropriate Placements |
+| --- | --- |
 | Binary or script executables                              | `/usr/bin`                                                                                                               |
 | Binaries run by other programs                            | `/usr/libexec`, unless hard-coded by other packages/components (GNOME, \*ahem\*)                                         |
 | Data files (no ELF, or architecturally-dependent scripts) | `/usr/share`                                                                                                             |
@@ -264,8 +264,8 @@ AOSC OS, like many other Linux Distributions, expect packaged files to be locate
 
 Electron, Chromium, and other Chromium-based packages should be packaged with the following structure.
 
-| Components                               | Appropriate Placements                                                                   |
-| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Components | Appropriate Placements |
+| --- | --- |
 | Binary executables                       | `/usr/bin`, where the executable is a symbolic link to its target in `/usr/lib/$PKGNAME` |
 | Desktop, AppStream, and other data files | `/usr/share`                                                                             |
 | Main program data                        | `/usr/lib/$PKGNAME`                                                                      |
@@ -278,8 +278,8 @@ Binary packages should not be installed to `/opt`, unless the package's licence 
 
 When committing (or contributing, if you like) to the [AOSC OS ABBS Tree](https://github.com/AOSC-Dev/aosc-os-abbs/), please observe the commit message standards, shown in the table below.
 
-| Action                                                                  | Message Formatting                               | Sample Commit Message                                                                                                                  |
-| ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| Action | Message Formatting | Sample Commit Message |
+| --- | --- | --- |
 | Introducing a new package                                               | `$PKGNAME: new, $PKGVER`                         | `windowsnt-kernel: new, 5.1.2600`                                                                                                      |
 | Security fixes with version update                                      | `$PKGNAME: update to $PKGVER; #NNN`              | `bash: update to 5.2; #114514`, where `#114514` is a reference to the original security report (GitHub issue)                          |
 | Security fixes without version update, utilising distribution patch(es) | `$PKGNAME: ($DISTNAME patch[es], $CHANNEL) #NNN` | `gnome-shell: (Ubuntu patches, 18.10) #2333`, where `#2333` is a reference to the original security report (GitHub issue)              |
