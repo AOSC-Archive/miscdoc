@@ -1,7 +1,10 @@
 \usepackage{xcolor}
 \usepackage{titling}
 \usepackage{datetime2}
+
 \usepackage{etoolbox}
+
+
 \usepackage{graphicx}
 \graphicspath{{./}}
 
@@ -26,19 +29,12 @@
 % Block quote
 \renewenvironment{quote}{\begin{quotation}\small\realrmfamily\parindent=0pt}{\end{quotation}}
 
-%%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
-% \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
-% \XeTeXlinebreaklocale "zh"
-% \XeTeXlinebreakskip = 0pt plus 1pt
 % Serif fonts: XCharter, QTPalatine, QTBookmann, NewComputerModern, Latin Modern Roman
-\setmainfont{Inter}
-\setromanfont{Inter}
-\setsansfont{Inter}
+\setmainfont{Inter}[BoldFont=Inter Semi Bold,BoldItalicFont=Inter Semi Bold Italic]
+\setromanfont{Inter}[BoldFont=Inter Semi Bold,BoldItalicFont=Inter Semi Bold Italic]
+\setsansfont{Inter}[BoldFont=Inter Semi Bold,BoldItalicFont=Inter Semi Bold Italic]
 \setmonofont{JetBrains Mono NL}
-% \setCJKmainfont{Noto Serif CJK SC}
-% \setCJKromanfont{Noto Serif CJK SC}
-% \setCJKsansfont{Noto Sans CJK SC}
-% \setCJKmonofont{Noto Sans CJK SC}
+% \setmonofont{Noto Sans Mono}
 \newcommand{\realrmfamily}[0]{\fontspec{XCharter}}
 
 \linespread{1.1}
@@ -84,11 +80,11 @@
         \mdseries
         \sffamily
         \normalsize
-        \theauthor\par
+        \TEXTpreauthor\theauthor\par
         \vspace{5pt}
 
         \normalsize
-        \thedate\par
+        \TEXTpredate\thedate\par
         \vspace{25pt}
         
         \hrule
@@ -100,3 +96,10 @@
 
 \setlength{\parindent}{0pt}
 \renewcommand{\arraystretch}{1.6}
+
+
+
+
+% Miscellaneous i18n
+\newcommand{\TEXTpreauthor}[0]{Authors: }
+\newcommand{\TEXTpredate}[0]{Last build: }

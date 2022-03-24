@@ -45,10 +45,12 @@ This file should look like:
 }
 ```
 
-| Field          | Description                                               |
-| -------------- | --------------------------------------------------------- |
-| author         | Names of authors, used under the title.                   |
+| Field          | Description                                                                                      |
+| -------------- | ------------------------------------------------------------------------------------------------ |
+| author         | Names of authors, used under the title.                                                          |
 | latex_features | A list of features to be applied, in the specified order. Make it empty to disable all features. |
+
+
 
 
 
@@ -64,6 +66,21 @@ Artifacts of `DOCNAME` include:
 
 It will use the `defaultbuild.sh` for building every document target,
 unless it finds a `build.sh` inside the `PROJNAME` directory.
+
+
+
+
+
+## More Details
+
+### LaTeX Features
+
+| Feature | Description                                      |
+| ------- | ------------------------------------------------ |
+| abstrat | Detach the Abstract section from the first page. |
+| notoc   | Remove TOC.                                      |
+| cjk     | Add CJK support. Prefer Chinese over English.    |
+
 
 
 

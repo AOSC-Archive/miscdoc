@@ -87,7 +87,7 @@ function _callPandoc() {
     pandoc "$TMPFN" \
         $PANDOC_LATEX_VARS \
         -V author="$(_getmetainfo .author)" \
-        -V date="Last build: $(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
+        -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
         -H "$TMPDIR/header.tex" \
         --include-after-body="$TMPDIR/footer.tex" \
         -o "$PDFPATH"

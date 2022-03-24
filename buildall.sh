@@ -6,23 +6,28 @@ if [[ " $@ " == *" --force "* ]]; then
     f_FORCE_ALL=y
     echo "[INFO] Starting full rebuild under '--force' parameter..."
 else
-    echo "[INFO] Building for the current branch '$BRANCH_NAME'..."
+    if [[ $BRANCH_NAME == master ]]; then
+        f_FORCE_ALL=y
+        echo "[INFO] Starting full rebuild since we are on 'master' branch..."
+    else
+        echo "[INFO] Building for the current branch '$BRANCH_NAME'..."
+    fi
 fi
 
 
 function _tryBuildProj() {
     PROJNAME="$1"
     ### The current branch must start with the PROJNAME
-    if [[ $f_FORCE_ALL != y ]] && [[ $PROJNAME != $BRANCH_NAME ]] && [[ $PROJNAME/* != $BRANCH_NAME ]]; then
+    if [[ "$f_FORCE_ALL" != y ]] && [[ "$PROJNAME" != "$BRANCH_NAME" ]] && [[ "$PROJNAME/"* != "$BRANCH_NAME" ]]; then
         echo "[INFO] Skipping '$PROJNAME' due to branch mismatch..."
         return 0
     fi
     printf "\n"
     echo "[INFO] Working in '$PROJNAME'..."
-    if [[ -e $PROJNAME/build.sh ]]; then
-        bash $PROJNAME/build.sh
+    if [[ -e "$PROJNAME/build.sh" ]]; then
+        bash "$PROJNAME/build.sh"
     else
-        bash defaultbuild.sh $PROJNAME
+        bash defaultbuild.sh "$PROJNAME"
     fi
 }
 
