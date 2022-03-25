@@ -16,15 +16,21 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    urlcolor=blue,
+    urlcolor=blue!80!green,
     pdfpagemode=FullScreen
 }
 
+% ======================================
 % TOC
 \let\OldTOC\tableofcontents
 \newcommand{\abstractsectionname}[0]{Abstract}
 \newcommand{\beforeabstractsec}[0]{\vspace{18pt}\hrule\vspace{5pt}\par}
 \renewcommand{\tableofcontents}{\textsf{\OldTOC}\par\beforeabstractsec\section*{\abstractsectionname}}
+\makeatletter
+\renewcommand{\l@section}{\normalsize\bfseries\@dottedtocline{1}{0em}{2em}}
+\renewcommand{\l@subsection}{\small\mdseries\@dottedtocline{2}{1em}{2.5em}}
+\makeatother
+
 
 % Block quote
 \renewenvironment{quote}{\begin{quotation}\small\realrmfamily\parindent=0pt}{\end{quotation}}
