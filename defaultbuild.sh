@@ -30,7 +30,7 @@ PANDOC_LATEX_VARS="
 "
 
 function _getmetainfo() {
-    jq -rM $1 $DIRPATH/info.json
+    jq -rM $1 $DOCDIRPATH/info.json
 }
 function _buildTmpFile() {
     TASKDIR="$1"
@@ -38,7 +38,7 @@ function _buildTmpFile() {
     ### Build README.md
     printf "Notes:\n\n" > $TASKDIR/README.md
     printf -- "- This full-text file is generated from the source files and shall not be edited manually.\n" >> $TASKDIR/README.md
-    printf -- "- PDF: https://repo.aosc.io/misc/artifacts/miscdoc/$PROJNAME/${DIRNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
+    printf -- "- PDF: https://repo.aosc.io/misc/artifacts/miscdoc/$PROJNAME/${DOCNAME}.pdf\n\n\n\n" >> $TASKDIR/README.md
     cat $TASKDIR/*-*.md >> $TASKDIR/README.md
 
     ### Build TMPFN
@@ -69,48 +69,48 @@ function _buildTmpFile() {
     fi
     ### Build Footer
     cat "$PWD/.tex/footer.tex" \
-        | sed "s|PROJNAMEANDDIRNAME|$PROJNAME/$DIRNAME|g"  \
+        | sed "s|PROJNAMEANDDOCNAME|$PROJNAME/$DOCNAME|g"  \
         > $TMPDIR/footer.tex
 }
 
 function _callPandoc() {
     mkdir -p "$PWD/_dist/$PROJNAME"
-    PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+    PDFPATH="$PWD/_dist/$PROJNAME/$DOCNAME.pdf"
 
-    ### Which writing system?
-    DOC_PROP_SCRIPT="$(_getmetainfo .script)"
-    if [[ $DOC_PROP_SCRIPT != latin ]]; then
-        EXTRA_SCRIPT_TAG="-$DOC_PROP_SCRIPT"
+    ### Other info
+    DOCLANG=en_US
+    if [[ "$(_getmetainfo .lang)" != "" ]]; then
+        DOCLANG="$(_getmetainfo .lang)"
     fi
 
     ### Actually compile PDF
     pandoc "$TMPFN" \
         $PANDOC_LATEX_VARS \
         -V author="$(_getmetainfo .author)" \
-        -V date="$(LANG=en_US.UTF-8 date '+%Y-%m-%d (%a)')" \
+        -V date="$(TZ=UTC LANG=$DOCLANG.UTF-8 date '+%Y-%m-%d (%a)')" \
         -H "$TMPDIR/header.tex" \
         --include-after-body="$TMPDIR/footer.tex" \
         -o "$PDFPATH"
 }
 
 function _buildTarget() {
-    DIRPATH="$(realpath "$1")"
-    DIRNAME="$(basename "$DIRPATH")"
-    echo "[INFO] Building document '$DIRNAME'"
+    DOCDIRPATH="$(realpath "$1")"
+    DOCNAME="$(basename "$DOCDIRPATH")"
+    echo "[INFO] Building document '$DOCNAME'"
 
-    if [[ ! -e $DIRPATH/info.json ]]; then
+    if [[ ! -e $DOCDIRPATH/info.json ]]; then
         echo "[ERROR] Cannot find 'info.json'"
     fi
 
-    TMPDIR="/tmp/aosc-miscdoc-pandoc-tmp-$(uuidgen v4).$PROJNAME.$DIRNAME"
+    TMPDIR="/tmp/aosc-miscdoc-pandoc-tmp-$(uuidgen v4).$PROJNAME.$DOCNAME"
     mkdir -p "$TMPDIR"
 
-    TMPFN="/tmp/.pandocTask--$PROJNAME-$DIRNAME.md"
-    _buildTmpFile "$PROJDIR/$DIRNAME"
+    TMPFN="/tmp/.pandocTask--$PROJNAME-$DOCNAME.md"
+    _buildTmpFile "$PROJDIR/$DOCNAME"
 
     ### Start compiling
     mkdir -p "$PWD/_dist/$PROJNAME"
-    PDFPATH="$PWD/_dist/$PROJNAME/$DIRNAME.pdf"
+    PDFPATH="$PWD/_dist/$PROJNAME/$DOCNAME.pdf"
     if [[ ! -e $PWD/.DoNotMakePDF ]]; then
         _callPandoc
     fi
@@ -134,9 +134,9 @@ else
     echo "[INFO] Building entire directory"
     PROJDIR="$(realpath "$1")"
     PROJNAME="$(basename "$PROJDIR")"
-    for DIRPATH in $PROJDIR/*; do
-        if [[ -e $DIRPATH/info.json ]]; then
-            _buildTarget "$DIRPATH"
+    for DOCDIRPATH in $PROJDIR/*; do
+        if [[ -e $DOCDIRPATH/info.json ]]; then
+            _buildTarget "$DOCDIRPATH"
         fi
     done
 fi
