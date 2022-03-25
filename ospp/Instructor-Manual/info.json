@@ -1,4 +1,5 @@
 {
     "author": "Neruthes",
-    "latex_features": "cjk"
+    "latex_features": "cjk",
+    "lang": "zh_CN"
 }

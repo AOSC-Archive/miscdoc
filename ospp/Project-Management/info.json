@@ -1,4 +1,5 @@
 {
     "author": "Neruthes, Mingcong Bai",
-    "latex_features": "abstract cjk"
+    "latex_features": "abstract cjk",
+    "lang": "zh_CN"
 }
