@@ -23,3 +23,4 @@ tar --xz -cf miscdoc.tar.xz _dist
 ### Final notes
 echo "Created release file 'miscdoc.tar.xz'"
 echo "The release version should be '$(date +'%Y%m%d')'"
+realpath miscdoc.tar.xz
