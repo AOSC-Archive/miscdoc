@@ -49,6 +49,7 @@ This file should look like:
 | -------------- | ------------------------------------------------------------------------------------------------ |
 | author         | Names of authors, used under the title.                                                          |
 | latex_features | A list of features to be applied, in the specified order. Make it empty to disable all features. |
+| lang           | Language for `date` to decide locale. The default value is `en_US`.                              |
 
 
 
