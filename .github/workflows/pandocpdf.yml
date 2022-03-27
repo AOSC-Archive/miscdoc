@@ -4,8 +4,9 @@ jobs:
   pandocpdf:
     runs-on: ubuntu-latest
     container:
-      image: pandoc/latex:edge-ubuntu
-      # - image: texlive/texlive:latest
+      image: 
+        - texlive/texlive:latest
+        - pandoc/latex:edge-ubuntu
     steps:
       - uses: actions/checkout@v2
       - run: bash .ci/setup.sh
