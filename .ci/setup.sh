@@ -23,6 +23,9 @@ mv JetBrains_Mono /usr/share/fonts/githubci/
 cd "$GDIR"
 ##################################################################
 
+apt update
+apt install jq
+
 exit 0
 
 
@@ -37,7 +40,7 @@ if [[ "$PWD" == *"/EWS/"* ]]; then
 fi
 sed -i 's|focal|impish|' /etc/apt/sources.list
 
-apt update
+
 yes | apt install \
     uuid-runtime \
     pandoc \
