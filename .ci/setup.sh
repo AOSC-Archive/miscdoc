@@ -24,7 +24,7 @@ cd "$GDIR"
 ##################################################################
 
 apt update
-yes | apt install jq
+yes | apt install jq uuid-runtime
 
 exit 0
 
