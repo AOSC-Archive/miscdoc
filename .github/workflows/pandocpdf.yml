@@ -10,9 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: bash .ci/setup.sh
-      - uses: teatimeguest/setup-texlive-action@v2
-        with:
-          version: 2021
+      # - uses: teatimeguest/setup-texlive-action@v2
+      #   with:
+      #     version: 2021
       - run: bash .ci/pandocpdf.sh
       - uses: linuxdeepin/upload-artifact@single-artifact-upload
         with:

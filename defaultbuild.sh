@@ -92,6 +92,11 @@ function _callPandoc() {
     mkdir -p "$PWD/_dist/$PROJNAME"
     PDFPATH="$PWD/_dist/$PROJNAME/$DOCNAME.pdf"
 
+    ### GitHub Actions
+    if [[ "$GITHUBCI" == y ]]; then
+        PDFPATH="$PWD/_dist/$PROJNAME/${PROJNAME}__${DOCNAME}.pdf"
+    fi
+
     ### Other info
     DOCLANG=en_US
     if [[ "$(_getmetainfo .lang)" != "" ]]; then
