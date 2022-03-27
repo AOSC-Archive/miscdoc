@@ -24,7 +24,7 @@ cd "$GDIR"
 ##################################################################
 
 apt update
-apt install jq
+yes | apt install jq
 
 exit 0
 
