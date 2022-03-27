@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: sudo bash .ci/setup.sh
       - run: bash .ci/pandocpdf.sh
-      # - uses: linuxdeepin/upload-artifact@single-artifact-upload
-      #   with:
-      #     path: ./_dist/*/*.pdf
-      #     single-archive: "false"
+      - uses: linuxdeepin/upload-artifact@single-artifact-upload
+        with:
+          path: ./_dist/*/*.pdf
+          single-archive: "false"
