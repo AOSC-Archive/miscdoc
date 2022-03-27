@@ -8,7 +8,7 @@ jobs:
       # - image: texlive/texlive:latest
     steps:
       - uses: actions/checkout@v2
-      - run: sudo bash .ci/setup.sh
+      - run: bash .ci/setup.sh
       - uses: teatimeguest/setup-texlive-action@v2
         with:
           version: 2021
