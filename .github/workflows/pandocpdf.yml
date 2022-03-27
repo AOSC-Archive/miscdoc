@@ -4,14 +4,14 @@ jobs:
   pandocpdf:
     runs-on: ubuntu-latest
     container:
-      - image: pandoc/latex:edge-ubuntu
-      - image: texlive/texlive:latest
+      image: pandoc/latex:edge-ubuntu
+      # - image: texlive/texlive:latest
     steps:
       - uses: actions/checkout@v2
       - run: sudo bash .ci/setup.sh
-      # - uses: teatimeguest/setup-texlive-action@v2
-      #   with:
-      #     version: 2021
+      - uses: teatimeguest/setup-texlive-action@v2
+        with:
+          version: 2021
       - run: bash .ci/pandocpdf.sh
       - uses: linuxdeepin/upload-artifact@single-artifact-upload
         with:
