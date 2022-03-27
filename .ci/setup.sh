@@ -10,7 +10,7 @@ echo "This is a message from 'setup.sh'."
 
 ##################################################################
 ### Retrieve building dependencies
-wget https://repo.aosc.io/misc/cidep/miscdoc/miscdoc.cidep.tar
+curl https://repo.aosc.io/misc/cidep/miscdoc/miscdoc.cidep.tar -o miscdoc.cidep.tar
 tar -pxvf miscdoc.cidep.tar
 
 cd .cidep
