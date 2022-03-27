@@ -23,6 +23,8 @@ mv JetBrains_Mono /usr/share/fonts/githubci/
 cd "$GDIR"
 ##################################################################
 
+exit 0
+
 
 ### Opportunistically change mirror
 if [[ "$PWD" == *"/EWS/"* ]]; then

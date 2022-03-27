@@ -3,11 +3,17 @@ on: [push]
 jobs:
   pandocpdf:
     runs-on: ubuntu-latest
+    container:
+      - image: pandoc/latex:edge-ubuntu
+      - image: texlive/texlive:latest
     steps:
       - uses: actions/checkout@v2
-      # - run: sudo bash .ci/setup.sh
-      # - run: bash .ci/pandocpdf.sh
-      # - uses: linuxdeepin/upload-artifact@single-artifact-upload
+      - run: sudo bash .ci/setup.sh
+      # - uses: teatimeguest/setup-texlive-action@v2
       #   with:
-      #     path: ./_dist/*/*.pdf
-      #     single-archive: "false"
+      #     version: 2021
+      - run: bash .ci/pandocpdf.sh
+      - uses: linuxdeepin/upload-artifact@single-artifact-upload
+        with:
+          path: ./_dist/*/*.pdf
+          single-archive: "false"
