@@ -24,7 +24,7 @@ cd "$GDIR"
 ##################################################################
 
 apt update
-yes | apt install jq uuid-runtime
+yes | apt install jq uuid-runtime pandoc fonts-noto-cjk
 
 exit 0
 
