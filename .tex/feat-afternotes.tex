@@ -1,0 +1,10 @@
+\newcommand{\findocnormaltext}[0]{}
+\renewcommand{\finalizedocument}[0]{
+    \clearpage
+    \section*{\finalizedocumentsectitle}
+    \findocnormaltext
+}
+
+\renewcommand{\findocnormaltext}[0]{\findocnormaltextEN}
+\newcommand{\findocnormaltextEN}[0]{If you have any suggestion, please contact the author.}
+\newcommand{\findocnormaltextZH}[0]{若对本文有任何建议，请联系作者。}

@@ -1,3 +1,7 @@
+% This feature controls language usage by altering the switches, and not by supplying the long text.
+% Unless the text lines are short enough.
+
+
 %%% Know issue: Cannot treat ASCII quotation marks in Markdown as non-CJK, causing using unexpected full-width glyph
 \usepackage[PunctStyle=plain,RubberPunctSkip=false]{xeCJK}
 \XeTeXlinebreaklocale "zh"
@@ -19,3 +23,6 @@
 
 \renewcommand{\TEXTpreauthor}[0]{作者：}
 \renewcommand{\TEXTpredate}[0]{生成日期：}
+
+\renewcommand{\finalizedocumentsectitle}[0]{后记}
+\renewcommand{\findocnormaltext}[0]{\findocnormaltextZH}

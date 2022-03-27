@@ -57,7 +57,24 @@ This file should look like:
 
 ## Building
 
-Run `./buildall.sh` to build for each `PROJNAME` (consulting the `projlist` file),
+### Dependencies
+
+Our dependencies include:
+
+- pandoc
+- texlive
+- fonts
+  - Inter
+  - Noto CJK
+  - JetBrains Mono
+
+### Preparations
+
+Run `./makecidep.sh` to download build dependencies for GitHub Actions.
+
+### Compiling
+
+Run `./buildall.sh --force` to build for each `PROJNAME` (consulting the `projlist` file),
 generating all `DOCNAME` artifacts in each `PROJNAME`.
 
 Artifacts of `DOCNAME` include:
@@ -68,7 +85,9 @@ Artifacts of `DOCNAME` include:
 It will use the `defaultbuild.sh` for building every document target,
 unless it finds a `build.sh` inside the `PROJNAME` directory.
 
+### Releasing
 
+Run `./release.sh` to make a release tarball.
 
 
 

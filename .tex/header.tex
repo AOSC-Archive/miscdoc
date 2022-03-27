@@ -11,7 +11,8 @@
 \usepackage{titlesec}
 \titleformat*{\section}{\LARGE\bfseries\sffamily}
 \titleformat*{\subsection}{\realrmfamily\Large\bfseries}
-\titleformat*{\subsubsection}{\fontspec{Inter Semi Bold}\large}
+% \titleformat*{\subsubsection}{\fontspec{Noto Sans CJK SC}\bfseries\large}
+\titleformat*{\subsubsection}{\fontspec{Inter Medium}\large}
 
 \hypersetup{
     colorlinks=true,
@@ -39,7 +40,7 @@
 \setmainfont{Inter}[BoldFont=Inter Semi Bold,BoldItalicFont=Inter Semi Bold Italic]
 \setromanfont{Inter}[BoldFont=Inter Semi Bold,BoldItalicFont=Inter Semi Bold Italic]
 \setsansfont{Inter}[BoldFont=Inter Semi Bold,BoldItalicFont=Inter Semi Bold Italic]
-\setmonofont{JetBrains Mono NL}
+\setmonofont{JetBrains Mono}
 \newcommand{\realrmfamily}[0]{\fontspec{XCharter}}
 
 \linespread{1.1}
@@ -95,6 +96,10 @@
         \hrule
     \end{minipage}
 }
+
+
+\newcommand{\finalizedocumentsectitle}[0]{Afternotes}
+\newcommand{\finalizedocument}[0]{}
 
 
 

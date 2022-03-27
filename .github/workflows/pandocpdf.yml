@@ -1,0 +1,13 @@
+name: pandocpdf
+on: [push]
+jobs:
+  pandocpdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: bash .ci/setup.sh
+      - run: bash .ci/pandocpdf.sh
+      # - uses: linuxdeepin/upload-artifact@single-artifact-upload
+      #   with:
+      #     path: ./_dist/*/*.pdf
+      #     single-archive: "false"

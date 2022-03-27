@@ -29,9 +29,24 @@ PANDOC_LATEX_VARS="
 --toc
 "
 
+
+
+
+### Compatibility layer
+function _du() {
+    if [[ -z "$GITHUB_ACTIONS" ]]; then
+        du $@
+    fi
+}
+
+
+
+
+### Core functions
 function _getmetainfo() {
     jq -rM $1 $DOCDIRPATH/info.json
 }
+
 function _buildTmpFile() {
     TASKDIR="$1"
 
@@ -115,7 +130,7 @@ function _buildTarget() {
         _callPandoc
     fi
     
-    du -h "$PDFPATH"
+    _du -h "$PDFPATH"
     rm "$TMPFN"
     # echo "[INFO] Remember to clear temporary files."
     rm -r "$TMPDIR"
