@@ -4,3 +4,4 @@ miscdoc.tar.xz
 *.tar
 localdeploy.sh
 .cidep
+makemsword.sh
